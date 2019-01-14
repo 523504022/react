@@ -42,7 +42,7 @@ class LoginForm extends Component {
 
     loginClick = () => {
         this.props.form.validateFields((err,values) => {
-            if(!values){
+            if(!err){
                 console.log('收集表单数据',values)
             } else {
                 this.props.form.resetFields()
