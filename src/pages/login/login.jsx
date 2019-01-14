@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
-import {Form, Input, Button, Icon} from 'antd'
+import {
+    Form,
+    Input,
+    Button,
+    Icon,
+    Checkbox
+} from 'antd'
 import logo from '../../assets/images/logo.png'
-import './login.less'
+import './index.less'
 
 const Item = Form.Item
 export default class Login extends Component {
@@ -15,56 +21,78 @@ export default class Login extends Component {
         <div className="login-content">
           <div className="login-box">
             <div className="title">用户登陆</div>
-            <LoginForm/>
+            <LoginForm />
           </div>
         </div>
       </div>
-
     )
   }
 }
 
 class LoginForm extends Component {
-    clickLogin = () => {
-        this.props.form.validateFields((err, values) => {
-            console.log('validateFields', err, values)
-            if (!err) {
-                console.log('收集表单数据', values)
-            }else{
+    checkUsername = (rule,value,callback) => {
+        if(!value){
+            callback('请输入用户名')
+        } else if(value.length < 4 || value.length > 8){
+            callback('用户名至少4位最多8位')
+        } else {
+            callback()
+        }
+    }
+
+    loginClick = () => {
+        this.props.form.validateFields((err,values) => {
+            if(!values){
+                console.log('收集表单数据',values)
+            } else {
                 this.props.form.resetFields()
             }
         })
     }
-    render() {
-        const {getFieldDecorator} = this.props.form
-        return(
+
+    render(){
+        const { getFieldDecorator } = this.props.form
+        return (
             <Form className="login-form">
               <Item>
                 {
-                    getFieldDecorator('username', {
-                        rules: [
-                            { required: true, message: '必须输入用户名' },
-                            { min: 4, message: '用户名最少4位'}
-                        ],
+                    getFieldDecorator('userName',{
+                        initialValue: 'AFeng',
+                        rules:[{type: 'string',validator: this.checkUsername}]
                     })(
-                        <Input placeholder='请输入用户名' prefix={<Icon type="user"/> }/>
+                        <Input placeholder="用户名" prefix={<Icon type="user"/>}/>
                     )
                 }
               </Item>
               <Item>
                 {
-                    getFieldDecorator('password',{
-                        rules: [{ required: true, message: '请输入密码' }],
+                    getFieldDecorator('passWord',{
+                        rules:[
+                            {required: true, message: '请输入密码'},
+                            {min: 4,message: '密码至少4位'}
+                        ]
                     })(
-                        <Input type='password' placeholder='请输入密码' prefix={<Icon type="lock" />} />
+                        <Input type="password" placeholder="密码" prefix={<Icon type="safety"/>}/>
                     )
                 }
               </Item>
               <Item>
-                <Button type='primary' className='login-form-button' onClick={this.clickLogin}>登录</Button>
+                {
+                    getFieldDecorator('remember', {
+                        valuePropName: 'checked',
+                        initialValue: true,
+                    })(
+                        <Checkbox>Remember me</Checkbox>
+                    )
+                }
+                <a className="login-form-forgot" href="javascirpt">Forgot password</a>
+              </Item>
+              <Item>
+                <Button type="primary" onClick={this.loginClick} className="login-form-button">登录</Button>
               </Item>
             </Form>
         )
     }
 }
+
 LoginForm = Form.create()(LoginForm)
