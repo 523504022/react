@@ -1,24 +1,22 @@
-import React, { Component } from 'react'
+import React from 'react'
 import {
     BrowserRouter,
     Switch,
     Route,
-    Redirect
 } from 'react-router-dom'
 
 import Login from './pages/login/login'
 import Admin from './pages/admin/admin'
 
-export default class App extends Component {
-  render() {
-    return (
-    <BrowserRouter>
-        <Switch>
+export default class App extends React.Component {
+    render() {
+      return (
+        <BrowserRouter>
+          <Switch>
             <Route path='/login' component={Login}/>
-            <Route path='/admin' component={Admin}/>
-            <Redirect to='/login' />
-        </Switch>
-    </BrowserRouter>
-    )
+            <Route path='/' component={Admin}/>
+          </Switch>
+        </BrowserRouter>
+      )
+    }
   }
-}
