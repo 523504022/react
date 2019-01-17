@@ -24,3 +24,10 @@ export function reqWeather (city){
         )
     })
 } 
+
+// 获取一级、二级分类列表 
+export const reqCategorys = (parentId) => ajax('/manage/category/list',{parentId})
+// 添加分类
+export const reqAddCategory = (parentId,categoryName) => ajax('/manage/category/add',{parentId,categoryName},'POST')
+// 更新分类
+export const reqUpdateCategorys = ({categoryId,categoryName}) => ajax('/manage/category/update',{categoryId,categoryName},'POST')

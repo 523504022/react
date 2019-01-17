@@ -19,6 +19,7 @@ export default class Login extends Component {
           errorMsg:''
     }
     
+    // 登录验证
     login = async (username,password) => {
         const result = await reqLogin(username,password)
         console.log(result)
@@ -66,6 +67,7 @@ class LoginForm extends Component {
         login:PropTypes.func.isRequired
     }
 
+    // 密码规则
     checkUsername = (rule,value,callback) => {
         if(!value){
             callback('请输入密码')
@@ -82,9 +84,7 @@ class LoginForm extends Component {
                 console.log('收集表单数据',values)
                 const {username,password} = values
                 this.props.login(username,password)
-            } else {
-                
-            }
+            } 
         })
     }
 

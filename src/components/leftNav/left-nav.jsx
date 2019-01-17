@@ -15,6 +15,7 @@ const Item = Menu.Item
 
 class LeftNav extends Component {
 
+  // 使用递归，动态生成menu菜单
   getNodes = (list) => {
     return list.reduce((pre,item) => {
       if(item.children){
@@ -45,7 +46,9 @@ class LeftNav extends Component {
   }
 
   render() {
+    // 得到当前显示路由的path
     const path = this.props.location.pathname
+
     return (
       <div className='left-nav'>
         <NavLink to='/home' className='logo'>
@@ -61,4 +64,5 @@ class LeftNav extends Component {
   }
 }
 
+// 包装leftnav，使其可以获取props属性
 export default withRouter(LeftNav)

@@ -21,6 +21,7 @@ class Header extends Component {
     weather:''
   }
 
+  // 发异步ajax获取天气数据并更新状态
   getWeather = async () => {
     const {dayPictureUrl,weather} = await reqWeather('北京')
     this.setState({
@@ -29,6 +30,7 @@ class Header extends Component {
     })
   }
 
+  // 启动循环定时器，每秒更新一次sysTime
   getSysTime = () => {
     this.intervalId = setInterval(() => {
       this.setState({
@@ -71,18 +73,18 @@ class Header extends Component {
   }
 
   componentDidMount() {
-    // 启动循环定时器，每秒更新一次sysTime
     this.getSysTime()
-    // 发异步ajax获取天气数据并更新状态
+
     this.getWeather()
   }
 
   componentWillUnmount(){
+    // 停止定时器
     clearInterval(this.intervalId)
   }
 
   render() {
-
+    // 得到初始时间、天气图片、天气情况
     const {sysTime,dayPictureUrl,weather} = this.state
     // 得到当前用户
     const user = MemoryUtils.user
