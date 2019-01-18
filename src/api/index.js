@@ -31,3 +31,11 @@ export const reqCategorys = (parentId) => ajax('/manage/category/list',{parentId
 export const reqAddCategory = (parentId,categoryName) => ajax('/manage/category/add',{parentId,categoryName},'POST')
 // 更新分类
 export const reqUpdateCategorys = ({categoryId,categoryName}) => ajax('/manage/category/update',{categoryId,categoryName},'POST')
+// 获取指定页的分页列表
+export const reqProducts = (pageNum,pageSize) => ajax('/manage/product/list',{pageNum,pageSize},)
+// 搜索商品分页列表
+export const reqSearchProducts = ({pageNum,pageSize,searchType,searchName}) => ajax('/manage/product/search',{
+    pageNum,
+    pageSize,
+    [searchType]:searchName
+})
