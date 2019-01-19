@@ -45,7 +45,7 @@ export default class ProductIndex extends Component {
                     <span>
                         <a href="javascript:">详情</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:">修改</a>
+                        <a href="javascript:" onClick={() => this.props.history.push('/product/saveupdate',product)}>修改</a>
                     </span>
                 )
             },
@@ -93,7 +93,7 @@ export default class ProductIndex extends Component {
             <Input style={{width:150,marginLeft:10,marginRight:10}} placeholder='关键字'
                 onChange={(e) => this.setState({searchName:e.target.value})}/>
             <Button type='primary' onClick={() => this.getProducts(1)}>搜索</Button>
-            <Button type='primary' style={{float:"right"}}>
+            <Button type='primary' style={{float:"right"}} onClick={() => this.props.history.push('/product/saveupdate')}>
                 <Icon type='plus'/>
                 添加商品
             </Button>
