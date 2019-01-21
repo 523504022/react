@@ -180,7 +180,7 @@ class ProductSaveUpdate extends Component {
                 <RichTextEditor ref='editor' detail={product.detail}/> 
               </Item>
 
-              <Button type='primary' onClick={this.submit}>提交</Button>
+              <Button type='primary' onClick={this.submit} style={{marginLeft:100}}>提交</Button>
             </Form>
           </h2>
         </div>
