@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import {Icon,Form,Select,Input,Button} from 'antd'
+import {Icon,Form,Select,Input,Button, message} from 'antd'
 
+import PicturesWall from './pictures-wall'
 import RichTextEditor from './rich-text-editor'
-import {reqCategorys} from '../../api'
+import {reqCategorys,reqAddUpdateCategor} from '../../api'
 
 const Item = Form.Item
 const Option = Select.Option
@@ -49,10 +50,35 @@ class ProductSaveUpdate extends Component {
   }
 
   // 添加、更新产品
-  submit = () => {
-    const values = this.props.form.getFieldsValue()
+  submit = async () => {
+    const {name, desc, price, category1, category2} = this.props.form.getFieldsValue()
+    let pCategoryId,categoryId
+    if(!category2 || category2 === '未选择'){
+      pCategoryId = '0'
+      categoryId = category1
+    } else {
+      pCategoryId = category1
+      categoryId = category2
+    }
     // 得到富文本输入内容
     const detail = this.refs.editor.getContent()
+    // 得到所上传图片的文件名的数组
+    const imgs = this.refs.imgs.getImgs()
+
+    const product = {name, desc, price, pCategoryId, categoryId, imgs, detail}
+    
+    // 如果是更新，指定_id属性
+    const p = this.props.location.state
+    if(p){
+      product._id = p._id
+    }
+    const result = await reqAddUpdateCategor(product)
+    if(result.status === 0){
+      message.success('保存商品成功')
+      this.props.history.replace('/product/index')
+    } else {
+      message.error('保存失败，请重新操作')
+    } 
   }
   componentDidMount() {
     this.getCategorys('0')
@@ -147,7 +173,7 @@ class ProductSaveUpdate extends Component {
               </Item>
 
               <Item {...formTailLayout} label='商品图片'>
-                图片上传组件界面
+                <PicturesWall imgs={product.imgs} ref='imgs'/ >
               </Item>
 
               <Item label='商品详情' labelCol={{span:2}} wrapperCol={{span:20}}>

@@ -39,3 +39,9 @@ export const reqSearchProducts = ({pageNum,pageSize,searchType,searchName}) => a
     pageSize,
     [searchType]:searchName
 })
+
+// 删除图片
+export const reqDeleteImg = (name) => ajax('/manage/img/delete',{name},'POST')
+
+// 添加或者更新商品
+export const reqAddUpdateCategor = (product) => ajax('/manage/product/' + (product._id ? 'update' : 'add'),product,'POST')

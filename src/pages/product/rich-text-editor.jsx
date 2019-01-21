@@ -25,7 +25,7 @@ export default class RichTextEditor extends Component {
 
     //   获取富文本输入内容
     getContent = () => {
-        return draftToHtml(convertToRaw(this.editorState.getCurrentContent()))
+        return draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))
     }
 
     componentWillMount (){
@@ -35,7 +35,9 @@ export default class RichTextEditor extends Component {
             const {contentBlocks,entityMap} = blocksFromHtml
             const contentState = ContentState.createFromBlockArray(contentBlocks,entityMap)
             const editorState = EditorState.createWithContent(contentState)
-            this.state.editorState = editorState
+            this.setState({
+                editorState : editorState
+            })
         }
     }
 
